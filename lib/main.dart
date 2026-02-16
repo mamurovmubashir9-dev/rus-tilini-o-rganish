@@ -1,16 +1,5 @@
-// MUHIM! pubspec.yaml fayliga quyidagilarni qo'shing:
-// dependencies:
-//   flutter:
-//     sdk: flutter
-//   shared_preferences: ^2.2.2
-//   connectivity_plus: ^5.0.2
-
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:math';
-import 'dart:ui';
-// import 'package:shared_preferences/shared_preferences.dart'; // Uncomment bu qatorni!
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 void main() {
   runApp(const RusTiliApp());
@@ -502,9 +491,9 @@ class SimpleBackground extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            colors[0].withOpacity(0.08),
+            colors[0].withValues(alpha: 0.08),
             Colors.white,
-            colors[1].withOpacity(0.05),
+            colors[1].withValues(alpha: 0.05),
             Colors.white,
           ],
           stops: [0.0, 0.3, 0.7, 1.0],
@@ -523,8 +512,8 @@ class SimpleBackground extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    colors[0].withOpacity(0.1),
-                    colors[0].withOpacity(0.0),
+                    colors[0].withValues(alpha: 0.1),
+                    colors[0].withValues(alpha: 0.0),
                   ],
                 ),
               ),
@@ -541,8 +530,8 @@ class SimpleBackground extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    colors[1].withOpacity(0.08),
-                    colors[1].withOpacity(0.0),
+                    colors[1].withValues(alpha: 0.08),
+                    colors[1].withValues(alpha: 0.0),
                   ],
                 ),
               ),
@@ -557,7 +546,7 @@ class SimpleBackground extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: colors[0].withOpacity(0.03),
+                color: colors[0].withValues(alpha: 0.03),
               ),
             ),
           ),
@@ -569,7 +558,7 @@ class SimpleBackground extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: colors[1].withOpacity(0.04),
+                color: colors[1].withValues(alpha: 0.04),
               ),
             ),
           ),
@@ -635,41 +624,23 @@ class _SplashScreenState extends State<SplashScreen>
     // SharedPreferences ni yuklash (uncomment qiling)
     // ProgressData.loadProgress();
 
-    // Internet tekshiruvi
-    _checkInternetAndNavigate();
+    _navigateToHome();
   }
 
-  Future<void> _checkInternetAndNavigate() async {
+  Future<void> _navigateToHome() async {
     await Future.delayed(const Duration(milliseconds: 2500));
-    
-    // Internet ulanishini tekshirish
-    var connectivityResult = await Connectivity().checkConnectivity();
-    
+
     if (!mounted) return;
-    
-    if (connectivityResult == ConnectivityResult.none) {
-      // Internet yo'q - ogohlantirish ekraniga o'tish
-      Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const NoInternetScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          transitionDuration: Duration(milliseconds: 500),
-        ),
-      );
-    } else {
-      // Internet bor - asosiy ekranga o'tish
-      Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          transitionDuration: Duration(milliseconds: 500),
-        ),
-      );
-    }
+
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        transitionDuration: Duration(milliseconds: 500),
+      ),
+    );
   }
 
   @override
@@ -693,7 +664,7 @@ class _SplashScreenState extends State<SplashScreen>
             colors: [
               colors[0],
               colors[1],
-              colors[0].withOpacity(0.8),
+              colors[0].withValues(alpha: 0.8),
             ],
           ),
         ),
@@ -712,7 +683,7 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 200,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.05),
+                      color: Colors.white.withValues(alpha: 0.05),
                     ),
                   ),
                 ),
@@ -737,13 +708,13 @@ class _SplashScreenState extends State<SplashScreen>
                           borderRadius: BorderRadius.circular(40),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withValues(alpha: 0.3),
                               blurRadius: 40,
                               offset: Offset(0, 20),
                               spreadRadius: 5,
                             ),
                             BoxShadow(
-                              color: colors[0].withOpacity(0.5),
+                              color: colors[0].withValues(alpha: 0.5),
                               blurRadius: 20,
                               offset: Offset(0, 10),
                             ),
@@ -803,7 +774,7 @@ class _SplashScreenState extends State<SplashScreen>
                             color: Colors.white,
                             shadows: [
                               Shadow(
-                                color: Colors.black.withOpacity(0.3),
+                                color: Colors.black.withValues(alpha: 0.3),
                                 offset: Offset(0, 4),
                                 blurRadius: 10,
                               ),
@@ -815,10 +786,10 @@ class _SplashScreenState extends State<SplashScreen>
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha: 0.3),
                               width: 1,
                             ),
                           ),
@@ -828,7 +799,7 @@ class _SplashScreenState extends State<SplashScreen>
                               Icon(Icons.star, color: Colors.white, size: 18),
                               SizedBox(width: 8),
                               Text(
-                                'Оддий ва қизиқарли',
+                                'Oddiy va qiziqarli',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -865,7 +836,7 @@ class _SplashScreenState extends State<SplashScreen>
                           'Yuklanmoqda...',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             letterSpacing: 1,
                           ),
                         ),
@@ -888,7 +859,7 @@ class _SplashScreenState extends State<SplashScreen>
                     'Version 1.0.0',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.white.withOpacity(0.6),
+                      color: Colors.white.withValues(alpha: 0.6),
                       letterSpacing: 1,
                     ),
                   ),
@@ -898,335 +869,6 @@ class _SplashScreenState extends State<SplashScreen>
           ],
         ),
       ),
-    );
-  }
-}
-              
-// Internet yo'q ekrani - YANGI!
-class NoInternetScreen extends StatefulWidget {
-  const NoInternetScreen({Key? key}) : super(key: key);
-
-  @override
-  State<NoInternetScreen> createState() => _NoInternetScreenState();
-}
-
-class _NoInternetScreenState extends State<NoInternetScreen> 
-    with SingleTickerProviderStateMixin {
-  late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
-  bool _isChecking = false;
-
-  @override
-  void initState() {
-    super.initState();
-    
-    _pulseController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    )..repeat(reverse: true);
-    
-    _pulseAnimation = Tween<double>(begin: 0.95, end: 1.05).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-    );
-  }
-
-  @override
-  void dispose() {
-    _pulseController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _checkConnection() async {
-    setState(() {
-      _isChecking = true;
-    });
-
-    await Future.delayed(const Duration(seconds: 1));
-    
-    var connectivityResult = await Connectivity().checkConnectivity();
-    
-    if (!mounted) return;
-
-    setState(() {
-      _isChecking = false;
-    });
-
-    if (connectivityResult != ConnectivityResult.none) {
-      // Internet TOPILDI - faqat endi HomeScreen ga o'tish mumkin!
-      Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          transitionDuration: Duration(milliseconds: 500),
-        ),
-      );
-    } else {
-      // HALI HAM INTERNET YO'Q - ekranda qolamiz
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.wifi_off, color: Colors.white),
-              SizedBox(width: 12),
-              Expanded(
-                child: Text('Internet aloqasi topilmadi. Iltimos, internetga ulanib qayta urinib ko\'ring.'),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.red.shade600,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          margin: EdgeInsets.all(20),
-          duration: Duration(seconds: 4),
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = ProgressData.getGradientColors();
-    
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              colors[0].withOpacity(0.1),
-              Colors.white,
-              colors[1].withOpacity(0.1),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Animated WiFi icon
-                  ScaleTransition(
-                    scale: _pulseAnimation,
-                    child: Container(
-                      width: 180,
-                      height: 180,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.red.shade400,
-                            Colors.red.shade600,
-                          ],
-                        ),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.red.withOpacity(0.3),
-                            blurRadius: 30,
-                            spreadRadius: 5,
-                            offset: Offset(0, 10),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        Icons.wifi_off_rounded,
-                        size: 90,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 50),
-                  
-                  // Title
-                  Text(
-                    'Internet Aloqasi Yo\'q',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  
-                  const SizedBox(height: 16),
-                  
-                  // Description
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.grey.shade300,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          color: Colors.orange.shade700,
-                          size: 30,
-                        ),
-                        SizedBox(height: 12),
-                        Text(
-                          'Iltimos, internetga ulaning',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Bu ilova ishlashi uchun internet aloqasi kerak',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                            height: 1.5,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 40),
-                  
-                  // Retry button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: _isChecking ? null : _checkConnection,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: colors[0],
-                        foregroundColor: Colors.white,
-                        elevation: 8,
-                        shadowColor: colors[0].withOpacity(0.5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: _isChecking
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 3,
-                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                  ),
-                                ),
-                                SizedBox(width: 16),
-                                Text(
-                                  'Tekshirilmoqda...',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.refresh, size: 26),
-                                SizedBox(width: 12),
-                                Text(
-                                  'Qayta Urinish',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 20),
-                  
-                  // Tips
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade50,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.blue.shade200,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.tips_and_updates, color: Colors.blue.shade700, size: 20),
-                            SizedBox(width: 8),
-                            Text(
-                              'Maslahatlar:',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue.shade900,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12),
-                        _buildTip('WiFi yoki mobil internetni yoqing'),
-                        SizedBox(height: 6),
-                        _buildTip('Parvoz rejimini o\'chiring'),
-                        SizedBox(height: 6),
-                        _buildTip('Routerni qayta ishga tushiring'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTip(String text) {
-    return Row(
-      children: [
-        Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade700,
-            shape: BoxShape.circle,
-          ),
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.blue.shade900,
-              height: 1.4,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -1271,7 +913,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: colors[0].withOpacity(0.3),
+                                    color: colors[0].withValues(alpha: 0.3),
                                     blurRadius: 15,
                                     offset: Offset(0, 8),
                                   ),
@@ -1320,19 +962,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               colors: [
                                 colors[0],
                                 colors[1],
-                                colors[0].withOpacity(0.8),
+                                colors[0].withValues(alpha: 0.8),
                               ],
                             ),
                             borderRadius: BorderRadius.circular(32),
                             boxShadow: [
                               BoxShadow(
-                                color: colors[0].withOpacity(0.4),
+                                color: colors[0].withValues(alpha: 0.4),
                                 blurRadius: 30,
                                 offset: Offset(0, 15),
                                 spreadRadius: 2,
                               ),
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
+                                color: Colors.black.withValues(alpha: 0.1),
                                 blurRadius: 10,
                                 offset: Offset(0, 5),
                               ),
@@ -1349,7 +991,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 120,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Colors.white.withOpacity(0.1),
+                                    color: Colors.white.withValues(alpha: 0.1),
                                   ),
                                 ),
                               ),
@@ -1361,7 +1003,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 80,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Colors.white.withOpacity(0.05),
+                                    color: Colors.white.withValues(alpha: 0.05),
                                   ),
                                 ),
                               ),
@@ -1381,7 +1023,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 Container(
                                                   padding: EdgeInsets.all(8),
                                                   decoration: BoxDecoration(
-                                                    color: Colors.white.withOpacity(0.2),
+                                                    color: Colors.white.withValues(alpha: 0.2),
                                                     borderRadius: BorderRadius.circular(12),
                                                   ),
                                                   child: Icon(
@@ -1399,7 +1041,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white,
                                                     shadows: [
                                                       Shadow(
-                                                        color: Colors.black.withOpacity(0.3),
+                                                        color: Colors.black.withValues(alpha: 0.3),
                                                         offset: Offset(0, 2),
                                                         blurRadius: 4,
                                                       ),
@@ -1412,10 +1054,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Container(
                                               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                               decoration: BoxDecoration(
-                                                color: Colors.white.withOpacity(0.2),
+                                                color: Colors.white.withValues(alpha: 0.2),
                                                 borderRadius: BorderRadius.circular(12),
                                                 border: Border.all(
-                                                  color: Colors.white.withOpacity(0.3),
+                                                  color: Colors.white.withValues(alpha: 0.3),
                                                 ),
                                               ),
                                               child: Row(
@@ -1446,14 +1088,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 90,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.white.withOpacity(0.2),
+                                          color: Colors.white.withValues(alpha: 0.2),
                                           border: Border.all(
-                                            color: Colors.white.withOpacity(0.3),
+                                            color: Colors.white.withValues(alpha: 0.3),
                                             width: 3,
                                           ),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Colors.black.withOpacity(0.2),
+                                              color: Colors.black.withValues(alpha: 0.2),
                                               blurRadius: 15,
                                               offset: Offset(0, 5),
                                             ),
@@ -1471,7 +1113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   color: Colors.white,
                                                   shadows: [
                                                     Shadow(
-                                                      color: Colors.black.withOpacity(0.3),
+                                                      color: Colors.black.withValues(alpha: 0.3),
                                                       offset: Offset(0, 2),
                                                       blurRadius: 4,
                                                     ),
@@ -1482,7 +1124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 'Done',
                                                 style: TextStyle(
                                                   fontSize: 10,
-                                                  color: Colors.white.withOpacity(0.9),
+                                                  color: Colors.white.withValues(alpha: 0.9),
                                                   fontWeight: FontWeight.w500,
                                                   letterSpacing: 1,
                                                 ),
@@ -1502,10 +1144,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Container(
                                           padding: EdgeInsets.all(16),
                                           decoration: BoxDecoration(
-                                            color: Colors.white.withOpacity(0.15),
+                                            color: Colors.white.withValues(alpha: 0.15),
                                             borderRadius: BorderRadius.circular(20),
                                             border: Border.all(
-                                              color: Colors.white.withOpacity(0.2),
+                                              color: Colors.white.withValues(alpha: 0.2),
                                             ),
                                           ),
                                           child: Column(
@@ -1513,7 +1155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Container(
                                                 padding: EdgeInsets.all(10),
                                                 decoration: BoxDecoration(
-                                                  color: Colors.white.withOpacity(0.2),
+                                                  color: Colors.white.withValues(alpha: 0.2),
                                                   shape: BoxShape.circle,
                                                 ),
                                                 child: Text('🔤', style: TextStyle(fontSize: 24)),
@@ -1532,7 +1174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 'Harflar',
                                                 style: TextStyle(
                                                   fontSize: 12,
-                                                  color: Colors.white.withOpacity(0.9),
+                                                  color: Colors.white.withValues(alpha: 0.9),
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
@@ -1545,10 +1187,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Container(
                                           padding: EdgeInsets.all(16),
                                           decoration: BoxDecoration(
-                                            color: Colors.white.withOpacity(0.15),
+                                            color: Colors.white.withValues(alpha: 0.15),
                                             borderRadius: BorderRadius.circular(20),
                                             border: Border.all(
-                                              color: Colors.white.withOpacity(0.2),
+                                              color: Colors.white.withValues(alpha: 0.2),
                                             ),
                                           ),
                                           child: Column(
@@ -1556,7 +1198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Container(
                                                 padding: EdgeInsets.all(10),
                                                 decoration: BoxDecoration(
-                                                  color: Colors.white.withOpacity(0.2),
+                                                  color: Colors.white.withValues(alpha: 0.2),
                                                   shape: BoxShape.circle,
                                                 ),
                                                 child: Text('💬', style: TextStyle(fontSize: 24)),
@@ -1575,7 +1217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 'Gaplar',
                                                 style: TextStyle(
                                                   fontSize: 12,
-                                                  color: Colors.white.withOpacity(0.9),
+                                                  color: Colors.white.withValues(alpha: 0.9),
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
@@ -1608,11 +1250,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                  colors: [colors[0].withOpacity(0.2), colors[1].withOpacity(0.2)],
+                                  colors: [colors[0].withValues(alpha: 0.2), colors[1].withValues(alpha: 0.2)],
                                 ),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: colors[0].withOpacity(0.3),
+                                  color: colors[0].withValues(alpha: 0.3),
                                 ),
                               ),
                               child: Row(
@@ -1768,37 +1410,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
   
-  Widget _buildProgressStat(String icon, int value, int total, String label) {
-    return Container(
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          Text(icon, style: TextStyle(fontSize: 24)),
-          SizedBox(height: 8),
-          Text(
-            '$value/$total',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.white.withOpacity(0.9),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  
   String _getProgressMessage(int progress) {
     if (progress < 25) return 'Ajoyib boshlanish!';
     if (progress < 50) return 'Yaxshi ketmoqda!';
@@ -1868,13 +1479,13 @@ class MenuCard extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.4),
+              color: color.withValues(alpha: 0.4),
               blurRadius: 20,
               offset: Offset(0, 10),
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 10,
               offset: Offset(0, 5),
             ),
@@ -1891,7 +1502,7 @@ class MenuCard extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
             ),
@@ -1903,7 +1514,7 @@ class MenuCard extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                 ),
               ),
             ),
@@ -1920,15 +1531,15 @@ class MenuCard extends StatelessWidget {
                     width: isSmallScreen ? 60 : 70,
                     height: isSmallScreen ? 60 : 70,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.25),
+                      color: Colors.white.withValues(alpha: 0.25),
                       borderRadius: BorderRadius.circular(isSmallScreen ? 16 : 20),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         width: 2,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withValues(alpha: 0.1),
                           blurRadius: 10,
                           offset: Offset(0, 4),
                         ),
@@ -1954,7 +1565,7 @@ class MenuCard extends StatelessWidget {
                           color: Colors.white,
                           shadows: [
                             Shadow(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withValues(alpha: 0.3),
                               offset: Offset(0, 2),
                               blurRadius: 4,
                             ),
@@ -1966,10 +1577,10 @@ class MenuCard extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha: 0.3),
                             ),
                           ),
                           child: Text(
@@ -1997,7 +1608,7 @@ class MenuCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: isSmallScreen ? 13 : 15,
                               fontWeight: FontWeight.w600,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                           ),
                           Container(
@@ -2006,10 +1617,10 @@ class MenuCard extends StatelessWidget {
                               vertical: isSmallScreen ? 4 : 5
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.25),
+                              color: Colors.white.withValues(alpha: 0.25),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.3),
+                                color: Colors.white.withValues(alpha: 0.3),
                               ),
                             ),
                             child: Text(
@@ -2029,7 +1640,7 @@ class MenuCard extends StatelessWidget {
                           Container(
                             height: isSmallScreen ? 6 : 8,
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
@@ -2041,13 +1652,13 @@ class MenuCard extends StatelessWidget {
                                 gradient: LinearGradient(
                                   colors: [
                                     Colors.white,
-                                    Colors.white.withOpacity(0.8),
+                                    Colors.white.withValues(alpha: 0.8),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.white.withOpacity(0.5),
+                                    color: Colors.white.withValues(alpha: 0.5),
                                     blurRadius: 8,
                                     offset: Offset(0, 2),
                                   ),
@@ -2095,7 +1706,7 @@ class PoemsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                             ),
                           ],
@@ -2173,7 +1784,7 @@ class PoemCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: colors[0].withOpacity(0.1),
+              color: colors[0].withValues(alpha: 0.1),
               blurRadius: 15,
               offset: Offset(0, 5),
             ),
@@ -2189,8 +1800,8 @@ class PoemCard extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    colors[0].withOpacity(0.2),
-                    colors[1].withOpacity(0.15),
+                    colors[0].withValues(alpha: 0.2),
+                    colors[1].withValues(alpha: 0.15),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(18),
@@ -2230,7 +1841,7 @@ class PoemCard extends StatelessWidget {
             ),
             Icon(
               Icons.arrow_forward_ios,
-              color: colors[0].withOpacity(0.5),
+              color: colors[0].withValues(alpha: 0.5),
               size: 20,
             ),
           ],
@@ -2270,7 +1881,7 @@ class PoemDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                             ),
                           ],
@@ -2306,7 +1917,7 @@ class PoemDetailScreen extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           decoration: BoxDecoration(
-                            color: colors[0].withOpacity(0.1),
+                            color: colors[0].withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -2340,7 +1951,7 @@ class PoemDetailScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(28),
                             boxShadow: [
                               BoxShadow(
-                                color: colors[0].withOpacity(0.3),
+                                color: colors[0].withValues(alpha: 0.3),
                                 blurRadius: 20,
                                 offset: Offset(0, 10),
                               ),
@@ -2354,7 +1965,7 @@ class PoemDetailScreen extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color: Colors.white.withValues(alpha: 0.2),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
@@ -2392,13 +2003,13 @@ class PoemDetailScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(28),
                             boxShadow: [
                               BoxShadow(
-                                color: colors[0].withOpacity(0.15),
+                                color: colors[0].withValues(alpha: 0.15),
                                 blurRadius: 20,
                                 offset: Offset(0, 10),
                               ),
                             ],
                             border: Border.all(
-                              color: colors[0].withOpacity(0.3),
+                              color: colors[0].withValues(alpha: 0.3),
                               width: 2,
                             ),
                           ),
@@ -2410,7 +2021,7 @@ class PoemDetailScreen extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                     decoration: BoxDecoration(
-                                      color: colors[0].withOpacity(0.1),
+                                      color: colors[0].withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
@@ -2443,10 +2054,10 @@ class PoemDetailScreen extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: colors[0].withOpacity(0.05),
+                            color: colors[0].withValues(alpha: 0.05),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: colors[0].withOpacity(0.2),
+                              color: colors[0].withValues(alpha: 0.2),
                             ),
                           ),
                           child: Row(
@@ -2554,7 +2165,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                             ),
                           ],
@@ -2586,7 +2197,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: colors[0].withOpacity(0.15),
+                          color: colors[0].withValues(alpha: 0.15),
                           blurRadius: 15,
                           offset: Offset(0, 5),
                         ),
@@ -2624,7 +2235,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
-                            color: colors[0].withOpacity(0.3),
+                            color: colors[0].withValues(alpha: 0.3),
                             blurRadius: 20,
                             offset: Offset(0, 10),
                           ),
@@ -2636,7 +2247,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                             'Tarjima:',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                           ),
                           SizedBox(height: 12),
@@ -2681,7 +2292,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: colors[0].withOpacity(0.2),
+                                  color: colors[0].withValues(alpha: 0.2),
                                 ),
                               ),
                               child: Row(
@@ -2744,7 +2355,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                 color: isSelected ? null : Colors.white,
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: isSelected ? Colors.transparent : colors[0].withOpacity(0.3),
+                                  color: isSelected ? Colors.transparent : colors[0].withValues(alpha: 0.3),
                                 ),
                               ),
                               child: Text(
@@ -2783,7 +2394,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: colors[0].withOpacity(0.08),
+                                color: colors[0].withValues(alpha: 0.08),
                                 blurRadius: 10,
                                 offset: Offset(0, 4),
                               ),
@@ -2797,8 +2408,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      colors[0].withOpacity(0.2),
-                                      colors[1].withOpacity(0.15),
+                                      colors[0].withValues(alpha: 0.2),
+                                      colors[1].withValues(alpha: 0.15),
                                     ],
                                   ),
                                   borderRadius: BorderRadius.circular(14),
@@ -2836,7 +2447,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                         margin: EdgeInsets.only(top: 6),
                                         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                         decoration: BoxDecoration(
-                                          color: colors[0].withOpacity(0.1),
+                                          color: colors[0].withValues(alpha: 0.1),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         child: Text(
@@ -2926,7 +2537,7 @@ class AlphabetScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                             ),
                           ],
@@ -3015,7 +2626,7 @@ class LetterCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: colors[0].withOpacity(0.3),
+              color: colors[0].withValues(alpha: 0.3),
               blurRadius: 15,
               offset: Offset(0, 8),
             ),
@@ -3037,7 +2648,7 @@ class LetterCard extends StatelessWidget {
                 '[$transcription]',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                 ),
               ),
           ],
@@ -3091,7 +2702,7 @@ class LetterCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Column(
@@ -3120,7 +2731,7 @@ class LetterCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Column(
@@ -3423,7 +3034,7 @@ class WordsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                             ),
                           ],
@@ -3513,7 +3124,7 @@ class WordCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF3B82F6).withOpacity(0.1),
+              color: Color(0xFF3B82F6).withValues(alpha: 0.1),
               blurRadius: 15,
               offset: Offset(0, 5),
             ),
@@ -3529,8 +3140,8 @@ class WordCard extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xFF3B82F6).withOpacity(0.2),
-                    Color(0xFF60A5FA).withOpacity(0.15),
+                    Color(0xFF3B82F6).withValues(alpha: 0.2),
+                    Color(0xFF60A5FA).withValues(alpha: 0.15),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(18),
@@ -3692,7 +3303,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                     : 'Daraja ${currentLevel} tugadi!',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -3700,7 +3311,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
@@ -3719,7 +3330,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                           'Keyingi: Daraja ${currentLevel + 1}',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                           ),
                         ),
                       ],
@@ -3753,7 +3364,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                       ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.2),
+                        backgroundColor: Colors.white.withValues(alpha: 0.2),
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -3771,7 +3382,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.15),
+                        backgroundColor: Colors.white.withValues(alpha: 0.15),
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -3826,7 +3437,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
+                                  color: Colors.black.withValues(alpha: 0.1),
                                   blurRadius: 10,
                                 ),
                               ],
@@ -3854,7 +3465,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                               vertical: 8
                             ),
                             decoration: BoxDecoration(
-                              color: colors[0].withOpacity(0.15),
+                              color: colors[0].withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
@@ -3877,7 +3488,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                              color: colors[0].withOpacity(0.3),
+                              color: colors[0].withValues(alpha: 0.3),
                               blurRadius: 15,
                               offset: Offset(0, 5),
                             ),
@@ -3903,7 +3514,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
@@ -3945,7 +3556,7 @@ class _MemoryGameScreenState extends State<MemoryGameScreen> {
                             boxShadow: [
                               BoxShadow(
                                 color: (revealed[index] ? colors[0] : Color(0xFF8B5CF6))
-                                    .withOpacity(0.3),
+                                    .withValues(alpha: 0.3),
                                 blurRadius: 10,
                                 offset: Offset(0, 5),
                               ),
@@ -4156,14 +3767,14 @@ class _QuizScreenState extends State<QuizScreen> {
                   message,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                 ),
                 const SizedBox(height: 16),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -4181,7 +3792,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                         ),
                       ),
                     ],
@@ -4215,7 +3826,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     SizedBox(width: 12),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.2),
+                        backgroundColor: Colors.white.withValues(alpha: 0.2),
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -4260,7 +3871,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                             ),
                           ],
@@ -4283,7 +3894,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
-                          color: colors[0].withOpacity(0.15),
+                          color: colors[0].withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -4312,7 +3923,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             borderRadius: BorderRadius.circular(24),
                             boxShadow: [
                               BoxShadow(
-                                color: colors[0].withOpacity(0.15),
+                                color: colors[0].withValues(alpha: 0.15),
                                 blurRadius: 20,
                                 offset: Offset(0, 10),
                               ),
@@ -4335,7 +3946,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           bool isSelected = selectedAnswer == index;
                           
                           Color bgColor = Colors.white;
-                          Color borderColor = colors[0].withOpacity(0.3);
+                          Color borderColor = colors[0].withValues(alpha: 0.3);
                           Color textColor = Colors.black87;
                           
                           if (answered) {
@@ -4361,7 +3972,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                 border: Border.all(color: borderColor, width: 2),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: borderColor.withOpacity(0.2),
+                                    color: borderColor.withValues(alpha: 0.2),
                                     blurRadius: 10,
                                     offset: Offset(0, 4),
                                   ),
@@ -4374,8 +3985,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                     height: 32,
                                     decoration: BoxDecoration(
                                       color: answered && isCorrect 
-                                        ? Colors.white.withOpacity(0.3)
-                                        : colors[0].withOpacity(0.15),
+                                        ? Colors.white.withValues(alpha: 0.3)
+                                        : colors[0].withValues(alpha: 0.15),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
@@ -4604,14 +4215,14 @@ class _WordTestScreenState extends State<WordTestScreen> {
                   message,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                 ),
                 const SizedBox(height: 16),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -4629,7 +4240,7 @@ class _WordTestScreenState extends State<WordTestScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                         ),
                       ),
                     ],
@@ -4665,7 +4276,7 @@ class _WordTestScreenState extends State<WordTestScreen> {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.2),
+                        backgroundColor: Colors.white.withValues(alpha: 0.2),
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -4712,7 +4323,7 @@ class _WordTestScreenState extends State<WordTestScreen> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                             ),
                           ],
@@ -4740,7 +4351,7 @@ class _WordTestScreenState extends State<WordTestScreen> {
                           vertical: 8
                         ),
                         decoration: BoxDecoration(
-                          color: colors[0].withOpacity(0.15),
+                          color: colors[0].withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -4770,7 +4381,7 @@ class _WordTestScreenState extends State<WordTestScreen> {
                             borderRadius: BorderRadius.circular(24),
                             boxShadow: [
                               BoxShadow(
-                                color: colors[0].withOpacity(0.15),
+                                color: colors[0].withValues(alpha: 0.15),
                                 blurRadius: 20,
                                 offset: Offset(0, 10),
                               ),
@@ -4793,7 +4404,7 @@ class _WordTestScreenState extends State<WordTestScreen> {
                           bool isSelected = selectedAnswer == index;
                           
                           Color bgColor = Colors.white;
-                          Color borderColor = colors[0].withOpacity(0.3);
+                          Color borderColor = colors[0].withValues(alpha: 0.3);
                           Color textColor = Colors.black87;
                           
                           if (answered) {
@@ -4819,7 +4430,7 @@ class _WordTestScreenState extends State<WordTestScreen> {
                                 border: Border.all(color: borderColor, width: 2),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: borderColor.withOpacity(0.2),
+                                    color: borderColor.withValues(alpha: 0.2),
                                     blurRadius: 10,
                                     offset: Offset(0, 4),
                                   ),
@@ -4832,8 +4443,8 @@ class _WordTestScreenState extends State<WordTestScreen> {
                                     height: isSmallScreen ? 28 : 32,
                                     decoration: BoxDecoration(
                                       color: answered && isCorrect 
-                                        ? Colors.white.withOpacity(0.3)
-                                        : colors[0].withOpacity(0.15),
+                                        ? Colors.white.withValues(alpha: 0.3)
+                                        : colors[0].withValues(alpha: 0.15),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
